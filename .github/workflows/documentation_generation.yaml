@@ -4,6 +4,7 @@ on:
   push:
     branches:
     - master
+    - open-pr-doc-gen
 
 jobs:
   generate_doc:
@@ -15,3 +16,5 @@ jobs:
         fetch-depth: 0
     - name: Generate Actions Documentation
       uses: ./github-actions
+      with:
+        github_token: '${{ github.token }}'
