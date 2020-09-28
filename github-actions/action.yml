@@ -23,6 +23,10 @@ inputs:
     required: false
     default: |-
       third-party/**/*
+  branch:
+    description: |-
+      The branch name used by the bot to be pushed at the origin.
+    default: generated-doc-github-actions
 outputs: {}
 runs:
   using: composite
@@ -45,8 +49,9 @@ runs:
         git config user.name github-actions
         git config user.email github-actions@github.com
 
+        git checkout -B '${{ inputs.branch }}'
         git add ${{ steps.modified_files.outputs.files }}
         git commit --message 'doc: auto-generated GH Actions README.md'
-        git push
+        git push --force-with-lease --set-upstream origin '${{ inputs.branch }}'
       fi
     shell: bash
